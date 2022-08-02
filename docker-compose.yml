@@ -1,0 +1,15 @@
+version: '20'
+services:
+  expressapp:
+    container_name: expressapp
+    buid: ./
+    expose:
+      - 8000
+    volumes: ./user/src/app
+  reactapp:
+    container_name: reactapp
+    build: ./client
+    expose:
+      - 3000
+    volumes:
+      - ./user/src/app

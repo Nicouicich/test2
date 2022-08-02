@@ -1,0 +1,336 @@
+---
+openapi: 3.0.0
+info:
+  title: Titulo de nuestro proyecto Backend
+  description: Esta API es un ejemplo de la clase 43 de Coderhouse donde vamos a ver como se documenta con swagger
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/Nicouicich/Alegra-Test/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: http://localhost:8080/api
+  description: Local server
+- url: https://mi-url-de-heroku.com/api
+  description: Production server
+paths:
+  /ingredients:
+    get:
+      tags:
+      - Ingredient
+      summary: Gets every ingredient
+      responses:
+        "200":
+          description: Every ingredient.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ingredient'
+        "404":
+          description: Not found
+        "500":
+          description: Server Error
+  /ingredients/{id}:
+    get:
+      tags:
+      - Ingredient
+      summary: Returns an ingredient from an ID
+      parameters:
+      - name: id
+        in: path
+        description: Id of the product.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ingredient'
+        "404":
+          description: Not found
+        "500":
+          description: Server Error
+  /ingredients/add:
+    post:
+      tags:
+      - Ingredient
+      summary: Adds stock to an ingredient
+      parameters:
+      - name: id
+        in: query
+        description: Id of the ingredient.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: quantity
+        in: query
+        description: quantity to add to the stock of the ingredient
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: number
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ingredient'
+        "404":
+          description: Not found
+        "500":
+          description: Server Error
+  /ingredients/sub:
+    post:
+      tags:
+      - Ingredient
+      summary: Subtrack stock to an ingredient
+      parameters:
+      - name: id
+        in: query
+        description: Id of the ingredient.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: quantity
+        in: query
+        description: quantity to subtrack to the stock of the ingredient
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: number
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ingredient'
+        "404":
+          description: Not found
+        "500":
+          description: Server Error
+  /purchases:
+    get:
+      tags:
+      - Purchase
+      summary: Gets all purchases from the market
+      responses:
+        "200":
+          description: Gets all purchases from the market with its quantity.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Purchase'
+        "404":
+          description: Not found
+        "500":
+          description: Server Error
+  /plates:
+    post:
+      tags:
+      - Plate
+      summary: Creates new random plate
+      responses:
+        "200":
+          description: Plate created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plate'
+        "404":
+          description: Not found
+        "500":
+          description: Server Error
+  /plates/{id}:
+    post:
+      tags:
+      - Plate
+      summary: Finish a plate by an ID
+      parameters:
+      - name: id
+        in: path
+        description: Id of the product.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plate'
+        "404":
+          description: Not found
+        "500":
+          description: Server Error
+  /plates/all:
+    get:
+      tags:
+      - Plate
+      summary: Gets all plate
+      responses:
+        "200":
+          description: Gets all plate.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Plate'
+        "404":
+          description: Not found
+        "500":
+          description: Server Error
+  /plates/pending:
+    get:
+      tags:
+      - Plate
+      summary: Gets all pending plates.
+      responses:
+        "200":
+          description: Gets all pending plates.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Plate'
+        "404":
+          description: Not found
+        "500":
+          description: Server Error
+  /recipes:
+    get:
+      tags:
+      - Recipe
+      summary: Gets all recipes
+      responses:
+        "200":
+          description: Gets all recipes.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Recipe'
+        "404":
+          description: Not found
+        "500":
+          description: Server Error
+  /recipes/{id}:
+    get:
+      tags:
+      - Recipe
+      summary: Get a recipe by its ID
+      parameters:
+      - name: id
+        in: path
+        description: Id of the recipe.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+        "404":
+          description: Not found
+        "500":
+          description: Server Error
+components:
+  schemas:
+    Ingredient:
+      required:
+      - name
+      - quantity
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the Ingredient
+        quantity:
+          type: number
+          description: Stock available of the Ingredient
+      example:
+        name: Tomato
+        quantity: 2
+    Purchase:
+      required:
+      - name
+      - quantity
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the Ingredient
+        quantity:
+          type: number
+          description: Quantity bougth from the market
+      example:
+        name: Tomato
+        quantity: 2
+    Plate:
+      required:
+      - order
+      - recipe
+      - status
+      type: object
+      properties:
+        recipe:
+          type: number
+          description: Id of the recipe
+        order:
+          type: number
+          description: Order number
+        status:
+          type: string
+          description: Status of the order
+      example:
+        recipe: 62deeefaa1d066ae8c719312
+        order: 2
+        status: Pending
+    Recipe:
+      required:
+      - ingredients
+      - name
+      type: object
+      properties:
+        ingredients:
+          type: array
+          description: An array with all its ingredients
+          items:
+            $ref: '#/components/schemas/Ingredient'
+        name:
+          type: string
+          description: Name of the recipe
+      example:
+        ingredients:
+        - {}
+        name: Salad
+  responses:
+    NotFound:
+      description: Not found
+    ServerError:
+      description: Server Error
